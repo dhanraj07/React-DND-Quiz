@@ -11,6 +11,7 @@ const Container = styled.div`
     flex-wrap: wrap;
     margin: 0 auto;
     padding: 0 1rem;
+    max-width: 800px;
 `;
 
 const Response = styled.div`
@@ -19,7 +20,7 @@ const Response = styled.div`
     width: 100%;
 `;
 
-document.body.style.backgroundColor = '#000';
+document.body.style.backgroundColor = '#ffe9c9';
 
 class App extends React.Component {
     state = {

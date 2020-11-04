@@ -1,9 +1,9 @@
 const initialData = {
     tasks: {
-        'task-1': { id: 'task-1', content: 'Question 1', isCorrect: true, correctResponse: 'correct response!', incorrectResponse: 'incorrect response!'},
-        'task-2': { id: 'task-2', content: 'Question 2', isCorrect: true, correctResponse: 'correct response!', incorrectResponse: 'incorrect response!'},
-        'task-3': { id: 'task-3', content: 'Question 3', isCorrect: false, correctResponse: 'correct response!', incorrectResponse: 'incorrect response!'},
-        'task-4': { id: 'task-4', content: 'Question 4', isCorrect: false, correctResponse: 'correct response!', incorrectResponse: 'incorrect response!'}
+        'task-1': { id: 'task-1', content: 'Question 1'},
+        'task-2': { id: 'task-2', content: 'Question 2'},
+        'task-3': { id: 'task-3', content: 'Question 3'},
+        'task-4': { id: 'task-4', content: 'Question 4'}
     },
     columns: {
         'question1' : {
@@ -33,21 +33,25 @@ const initialData = {
         'answer1' : {
             id: 'answer1',
             type: 'answer',
+            title: 'Placeholder1',
             taskIds: [],
         },
         'answer2' : {
             id: 'answer2',
             type: 'answer',
+            title: 'Placeholder2',
             taskIds: [],
         },
         'answer3' : {
             id: 'answer3',
             type: 'answer',
+            title: 'Placeholder3',
             taskIds: [],
         },
         'answer4' : {
             id: 'answer4',
             type: 'answer',
+            title: 'Placeholder4',
             taskIds: [],
         },
     },

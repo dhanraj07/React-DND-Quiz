@@ -11,22 +11,17 @@ const Container = styled.div`
     z-index: 1;
     text-align: center;
     padding: 8px;
-    margin-bottom: 8px;
     border-radius: 8px;
     display: flex;
     color: #233D93;
     position: ${props => props.isDragDisabled ? 'relative' : 'absolute'};
     box-sizing: border-box;
     height: 100%;
+    top: 0;
     transform: ${props => props.isDragDisabled ? 'none!important' : 'translate(0%,0%)'};
     // width: ${props => props.active && props.isDragging ? '200px!important' : '100%'};
     width: 100%;
-    background-color: ${props => 
-        props.isDragDisabled ?
-        '#E5EAF5' :
-        props.isDragging ? 
-        'lightgreen'
-        : 'white'};
+    background-color: ${props => props.isDragDisabled ? '#FFB800' : props.isDragging ? 'rgba(255, 184, 0, 0.5)' : '#FFB800'};
     p {
         margin-top: 0;
         font-size: 26px;
@@ -43,7 +38,7 @@ class Task extends React.Component {
 
         const match = this.props.length !== (this.props.index + 1);
 
-        const isDragDisabled = this.props.column === 'correct' || this.props.column === 'incorrect';
+        const isDragDisabled = this.props.columnType === 'answer';
 
         const active = this.props.task.id === this.props.activeDestination.id &&
         this.props.activeDestination.destination === 'correct'

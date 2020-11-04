@@ -15,8 +15,7 @@ const Container = styled.div`
 
 const TaskList = styled.div`
     transition: border-color 0.5s ease;
-    border: 2px dashed white;
-    border-color: ${props => (props.isDraggingOver ? props.dragColour : 'white')}
+    border: ${props => props.isDraggingOver && props.columnType==='answer' ? '2px solid #FFB800' : "2px dashed #000"}
     background-color: transparent;
     height: 160px;
     overflow: hidden;
@@ -27,26 +26,29 @@ const TaskList = styled.div`
     font-size: 22px;
     cursor: pointer;
     max-width:100%;
+    display: block;
+    text-align:center;
+`;
+const PlaceHolder = styled.div`
+    top: 50%;
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%,-50%);
 `;
 
 class Column extends React.Component {
     render() {
-
-        const dragColour = 'yellow';
-
         return (
             <Container
-            className={this.props.column.type}
-            border={dragColour}>
+            className={this.props.column.type}>
                 <Droppable 
                     droppableId={this.props.column.id}
-                    isDropDisabled={this.props.column.type === 'question'}>
+                    isDropDisabled={this.props.column.type === 'question' || this.props.tasks.length >= 1}>
                 {(provided, snapshot) => (
                     <TaskList
                         innerRef={provided.innerRef}
                         {...provided.droppableProps}
                         isDraggingOver={snapshot.isDraggingOver}
-                        dragColour={dragColour}
                         column={this.props.column.id}
                         columnType={this.props.column.type}
                     >
@@ -55,9 +57,15 @@ class Column extends React.Component {
                                 task={task}
                                 index={index}
                                 column={this.props.column.id}
+                                columnType={this.props.column.type}
                                 activeDestination={this.props.activeDestination}
                                 length={this.props.questionLength}
                             />)}
+                        { (this.props.column.type === 'answer' && this.props.tasks.length < 1) ? 
+                            <PlaceHolder>
+                                {this.props.column.title}
+                            </PlaceHolder> : null
+                        }
                         {provided.placeholder}
                     </TaskList>
                 )}
