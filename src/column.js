@@ -30,6 +30,7 @@ const TaskList = styled.div`
     text-align:center;
 `;
 const PlaceHolder = styled.div`
+    width: 90%;
     top: 50%;
     left: 50%;
     position: absolute;

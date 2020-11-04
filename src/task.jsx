@@ -64,7 +64,6 @@ class Task extends React.Component {
                     length={this.props.length}
                 >
                     <div className="cardDetails">
-                        <span>{cardNo} of {this.props.length}</span>
                         <p>{this.props.task.content}</p>
                     </div>
                 </Container>
