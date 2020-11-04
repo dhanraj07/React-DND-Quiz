@@ -7,18 +7,18 @@ const Container = styled.div`
     border-radius: 2px;
     display: flex;
     flex-direction: column;
-    flex-basis: ${props => (props.className === 'question' ? '100%' : '50%')}
-    max-width: ${props => (props.className === 'question' ? '100%' : '50%')}
+    flex-basis: 25%;
+    max-width: 25%;
     box-sizing: border-box;
-    margin: ${props => (props.className === 'question' ? '0 1rem 1rem' : '0 0 1rem')}
+    margin: 0 auto;
 `;
 
 const TaskList = styled.div`
     transition: border-color 0.5s ease;
     border: 2px dashed white;
     border-color: ${props => (props.isDraggingOver ? props.dragColour : 'white')}
-    background-color: ${props => (props.column === 'question' ? 'white' : 'transparent')}
-    height: ${props => (props.column === 'question' ? '160px' : '100px')}
+    background-color: transparent;
+    height: 160px;
     overflow: hidden;
     box-sizing: border-box;
     position: relative;
@@ -26,6 +26,7 @@ const TaskList = styled.div`
     border-radius: 8px;
     font-size: 22px;
     cursor: pointer;
+    max-width:100%;
 `;
 
 class Column extends React.Component {
@@ -35,11 +36,11 @@ class Column extends React.Component {
 
         return (
             <Container
-            className={this.props.column.id}
+            className={this.props.column.type}
             border={dragColour}>
                 <Droppable 
                     droppableId={this.props.column.id}
-                    isDropDisabled={this.props.column.id === 'question'}>
+                    isDropDisabled={this.props.column.type === 'question'}>
                 {(provided, snapshot) => (
                     <TaskList
                         innerRef={provided.innerRef}
@@ -47,6 +48,7 @@ class Column extends React.Component {
                         isDraggingOver={snapshot.isDraggingOver}
                         dragColour={dragColour}
                         column={this.props.column.id}
+                        columnType={this.props.column.type}
                     >
                         {this.props.tasks.map((task, index) =>
                             <Task key={task.id}

@@ -9,8 +9,7 @@ import Column from './column';
 const Container = styled.div`
     display: flex;
     flex-wrap: wrap;
-    margin: 1rem auto;
-    max-width: 400px;
+    margin: 0 auto;
     padding: 0 1rem;
 `;
 
@@ -20,7 +19,7 @@ const Response = styled.div`
     width: 100%;
 `;
 
-document.body.style.backgroundColor = '#2C48B1';
+document.body.style.backgroundColor = '#000';
 
 class App extends React.Component {
     state = {
