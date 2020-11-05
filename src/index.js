@@ -14,87 +14,72 @@ const Container = styled.div`
     max-width: 800px;
 `;
 
-const Response = styled.div`
-    color: #FFF;
-    text-align: center;
-    width: 100%;
-`;
-
 document.body.style.backgroundColor = '#ffe9c9';
 
 class App extends React.Component {
     state = {
         initialData,
-        activeDestination: {},
-        response: ''
+        activeDestination: {}
     };
 
     onDragEnd = result => {
         const { destination, source, draggableId } = result;
 
-        if (!destination) {
+        if (!destination || destination.droppableId === source.droppableId) {
             return;
         }
 
-        if (
-            destination.droppableId === source.droppableId &&
-            destination.index === source.index
-        ) {
+        const start = this.state.initialData.slots.find(slot => slot.id === source.droppableId);
+        const finish = this.state.initialData.slots.find(slot => slot.id === destination.droppableId);
+
+        if (start.id !== finish.id) {
+            this.updateCards(start, finish, draggableId);
+        } else {
             return;
-        }
-
-        const start = this.state.initialData.columns[source.droppableId];
-        const finish = this.state.initialData.columns[destination.droppableId];
-
-
-        if (start !== finish) {
-
-            this.updateCards(start, finish, destination, source, draggableId);
-
-            this.checkAnswer(finish);
-
         }
 
 
     }
 
-    checkAnswer = finish => {
-        const questionCard = this.state.initialData.columns[finish.id].taskIds.map(taskId => this.state.initialData.tasks[taskId])[0];
-        const answerStatus = questionCard.isCorrect ? 'correct' : 'incorrect';
-        const isCorrect = answerStatus === finish.id;
-
+    updateAnswer = () => {
+        const answerData = this.state.initialData.slots.filter(slot => slot.type === 'slot').map(slot => slot.contains);
+        const isSubmitEnable = !answerData.includes(null);
         this.setState({
-            response: isCorrect ? questionCard.correctResponse : questionCard.incorrectResponse 
-        })
+            initialData: {
+                ...this.state.initialData,
+                answers: answerData,
+                isSubmitEnable: isSubmitEnable
+            }
+        });
+        console.log('Final Answer:', answerData);
+        console.log('Can Submit:', isSubmitEnable);
     }
 
-    updateCards = (start, finish, destination, source, draggableId) => {
+    updateCards = (start, finish, draggableId) => {
 
         // Moving from one list to another
-        const startTaskIds = Array.from(start.taskIds);
-        startTaskIds.splice(source.index, 1);
         const newStart = {
             ...start,
-            taskIds: startTaskIds,
+            contains: null,
         }
 
-        const finishTaskIds = Array.from(finish.taskIds);
-        finishTaskIds.splice(destination.index, 0, draggableId);
         const newFinish = {
             ...finish,
-            taskIds: finishTaskIds
+            contains: draggableId
         };
+
+        const newArrayItems = [newStart,newFinish];
+
+        const newSlotsData = this.state.initialData.slots.map(obj => newArrayItems.find(o => o.id === obj.id) || obj);
 
         const newState = {
             ...this.state.initialData,
-            columns:{
-                ...this.state.initialData.columns,
-                [newStart.id]: newStart,
-                [newFinish.id]: newFinish
-            }
+            slots:newSlotsData
         }
 
         this.setState({initialData: newState});
+
+        this.updateAnswer();
     }
 
     onDragUpdate = result => {
@@ -116,7 +101,7 @@ class App extends React.Component {
 
     render() {
 
-        const questionLength = Object.keys(this.state.initialData.tasks).length;
+        const optionsLength = this.state.initialData.options.length;
 
         return (
             <DragDropContext 
@@ -125,18 +110,17 @@ class App extends React.Component {
                 onDragUpdate={this.onDragUpdate}
                 >
                 <Container>
-                    {this.state.initialData.columnOrder.map((columnId) => {
-                        const column = this.state.initialData.columns[columnId];
-                        const tasks = column.taskIds.map(taskId => this.state.initialData.tasks[taskId]);
+                    {this.state.initialData.slots.map((column) => {
+                        const option = this.state.initialData.options.find(option=> option.id === column.contains);
+                        const tasks = option ? [option] : [];
 
                         return <Column
                             key={column.id}
                             column={column}
                             tasks={tasks}
                             activeDestination={this.state.activeDestination} 
-                            questionLength={questionLength}/>;
+                            optionsLength={optionsLength}/>;
                     })}
-                    <Response>{this.state.response}</Response>
                 </Container>
             </DragDropContext>
         );

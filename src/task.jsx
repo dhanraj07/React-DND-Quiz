@@ -1,5 +1,5 @@
 import React from 'react';
-import styled, { keyframes } from 'styled-components';
+import styled from 'styled-components';
 import { Draggable } from 'react-beautiful-dnd';
 
 const Container = styled.div`
@@ -35,14 +35,7 @@ const Container = styled.div`
 
 class Task extends React.Component {
     render() {
-
-        const match = this.props.length !== (this.props.index + 1);
-
-        const isDragDisabled = this.props.columnType === 'answer';
-
-        const active = this.props.task.id === this.props.activeDestination.id &&
-        this.props.activeDestination.destination === 'correct'
-        || this.props.activeDestination.destination === 'incorrect';
+        const isDragDisabled = this.props.columnType === 'slot';
 
         const cardNo = this.props.task.id.slice(5, this.props.task.id.length);
 
@@ -53,13 +46,11 @@ class Task extends React.Component {
             isDragDisabled={isDragDisabled}>
             {(provided, snapshot) => (
                 <Container
-                    className={active && snapshot.isDragging ? 'active' : null}
                     {...provided.draggableProps}
                     {...provided.dragHandleProps}
                     innerRef={provided.innerRef}
                     isDragging={snapshot.isDragging}
                     isDragDisabled={isDragDisabled}
-                    active={active}
                     index={cardNo}
                     length={this.props.length}
                 >

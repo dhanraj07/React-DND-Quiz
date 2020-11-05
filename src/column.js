@@ -15,7 +15,7 @@ const Container = styled.div`
 
 const TaskList = styled.div`
     transition: border-color 0.5s ease;
-    border: ${props => props.isDraggingOver && props.columnType==='answer' ? '2px solid #FFB800' : "2px dashed #000"}
+    border: ${props => props.isDraggingOver && props.columnType==='slot' ? '2px solid #FFB800' : "2px dashed #000"}
     background-color: transparent;
     height: 160px;
     overflow: hidden;
@@ -54,15 +54,16 @@ class Column extends React.Component {
                         columnType={this.props.column.type}
                     >
                         {this.props.tasks.map((task, index) =>
+                            task ?
                             <Task key={task.id}
                                 task={task}
                                 index={index}
                                 column={this.props.column.id}
                                 columnType={this.props.column.type}
                                 activeDestination={this.props.activeDestination}
-                                length={this.props.questionLength}
-                            />)}
-                        { (this.props.column.type === 'answer' && this.props.tasks.length < 1) ? 
+                                length={this.props.optionsLength}
+                            />: null)}
+                        { (this.props.column.type === 'slot' && this.props.tasks.length < 1) ? 
                             <PlaceHolder>
                                 {this.props.column.title}
                             </PlaceHolder> : null

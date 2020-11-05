@@ -1,61 +1,63 @@
 const initialData = {
-    tasks: {
-        'task-1': { id: 'task-1', content: 'Question 1'},
-        'task-2': { id: 'task-2', content: 'Question 2'},
-        'task-3': { id: 'task-3', content: 'Question 3'},
-        'task-4': { id: 'task-4', content: 'Question 4'}
-    },
-    columns: {
-        'question1' : {
+    slots: [
+        {
             id: 'question1',
             type: 'question',
-            title: 'Question',
-            taskIds: ['task-1'],
+            title: 'Question 1',
+            contains: 'option1'
         },
-        'question2' : {
+        {
             id: 'question2',
             type: 'question',
-            title: 'Question',
-            taskIds: ['task-2'],
+            title: 'Question 2',
+            contains: 'option2'
         },
-        'question3' : {
+        {
             id: 'question3',
             type: 'question',
-            title: 'Question',
-            taskIds: ['task-3'],
+            title: 'Question 3',
+            contains: 'option3'
         },
-        'question4' : {
+        {
             id: 'question4',
             type: 'question',
-            title: 'Question',
-            taskIds: ['task-4'],
+            title: 'Question 4',
+            contains: 'option4'
         },
-        'answer1' : {
-            id: 'answer1',
-            type: 'answer',
+        {
+            id: 'slot1',
+            type: 'slot',
             title: 'Placeholder 1',
-            taskIds: [],
+            contains: null
         },
-        'answer2' : {
-            id: 'answer2',
-            type: 'answer',
+        {
+            id: 'slot2',
+            type: 'slot',
             title: 'Placeholder 2',
-            taskIds: [],
+            contains: null
         },
-        'answer3' : {
-            id: 'answer3',
-            type: 'answer',
+        {
+            id: 'slot3',
+            type: 'slot',
             title: 'Placeholder 3',
-            taskIds: [],
+            contains: null
         },
-        'answer4' : {
-            id: 'answer4',
-            type: 'answer',
+        {
+            id: 'slot4',
+            type: 'slot',
             title: 'Placeholder 4',
-            taskIds: [],
+            contains: null
         },
-    },
-    columnOrder: ['question1', 'question2', 'question3', 'question4', 'answer1', 'answer2', 'answer3', 'answer4'],
+    ],
+
+    options: [
+        { id: 'option1', content: 'Option 1'},
+        { id: 'option2', content: 'Option 2'},
+        { id: 'option3', content: 'Option 3'},
+        { id: 'option4', content: 'Option 4'}
+    ],
+    answers: [],
+    isSubmitEnable: false
 };
 
 export default initialData;
